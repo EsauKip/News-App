@@ -1,7 +1,11 @@
 from app import app
 import urllib.request,json
+
+from models.source import Source
 from .models import article
+from datetime import datetime
 Article = article.Article
+# Source = source.Source
 # Getting api key
 api_key = app.config['NEWS_API_KEY']
 
@@ -27,6 +31,31 @@ def get_sources(source):
 
 
     return source_results
+def process_results(source_news_list):
+    '''
+    Function  that processes the source result and transform them to a list of Objects
+    Args:
+        source_list: A list of dictionaries that contain source details
+    Returns :
+        source_results: A list of source objects
+    '''
+    source_results = []
+    for source_item in source_news_list:
+        id = source_item .get('id')
+        name = source_item .get('name')
+        description = source_item .get('description')
+        url = source_item .get('url')
+        category = source_item .get('category')
+        country = source_item .get('country')
+
+        source_object = Source(id,name,description,url,category,country)
+        source_results.append(source_object)
+
+    return source_results
+
+
+
+
 def getting_articles(id):
     getting_article_url = base_article_url.format(id,api_key)
     with urllib.request.urlopen(getting_article_url) as url:
@@ -42,3 +71,27 @@ def getting_articles(id):
 
 
     return article_news_results
+def process_articles(articles_list):
+        '''
+        Function that processes the articles results and transform them to a list of Objects
+        Args:
+            article_list: A list of dictionaries that contain sources details
+        Returns:
+            article_results: A list of sources objects
+        '''
+        articles_object = []
+        for article_response in articles_list:
+            # id = article_response.get('id')
+            author = article_response.get('author')
+            title = article_response.get('title')
+            description = article_response.get('description')
+            url = article_response.get('url')
+            urlToImage = article_response.get('urlToImage')
+            publishedAt = article_response.get('publishedAt')
+            content = article_response.get('content')
+            dates = datetime.strptime(publishedAt, '%Y-%m-%dT%H:%M:%SZ')
+            date = dates.strftime('%Y.%m.%d')
+            articles_result = Article( author, title, description, url, urlToImage, date, content)
+            articles_object.append(articles_result)
+        return articles_object
+    
