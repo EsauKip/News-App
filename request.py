@@ -27,3 +27,18 @@ def get_sources(source):
 
 
     return source_results
+def getting_articles(id):
+    getting_article_url = base_article_url.format(id,api_key)
+    with urllib.request.urlopen(getting_article_url) as url:
+        article_news_data = url.read()
+        article_news_response = json.loads(article_news_data)
+
+        article_news_results = None
+      
+
+        if article_news_response['articles']:
+            article_news_list = article_news_response['articles']
+            article_news_results = process_articles(article_news_list)
+
+
+    return article_news_results
