@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+<!-- Content block -->
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- Poster background -->
+    <div class="row">
+      {%for article in articles%}
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 movie-details">
+            <img src="{{ article.image }}" alt="image" class="img-responsive" height="200pxx">
+           
+            <h5 class="overview"> {{ article.description}}</h5>
+           
+            <!-- <h3>image:{{ article.urlToImage }}</h3> -->
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
