@@ -12,12 +12,12 @@ def index():
     major_source = get_sources('sources')
     title = 'Home - Welcome to News Website Online'
     return render_template('index.html', title=title, major_source= major_source)
-@main.route('/sources/<id>')
+@main.route('/article/<id>')
 def article(id):
 
     '''
     View news page function that returns the news details page and its data
     '''
-    articles_news = getting_articles(id)
+    articles = getting_articles(id)
     
-    return render_template('article.html',id = id, article_news = articles_news )
+    return render_template('article.html',articles= articles,id=id )
