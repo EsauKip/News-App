@@ -12,9 +12,6 @@ def index():
     major_source = get_sources('sources')
     title = 'Home - Welcome to News Website Online'
     return render_template('index.html', title=title, major_source= major_source)
-  
-
-
 @main.route('/sources/<id>')
 def article(id):
 
