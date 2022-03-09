@@ -4,9 +4,7 @@ from app.models import Source,Article
 
 from datetime import datetime
 
-# Source = source.Source
 
-# Article = article.Article
 
 
 # Getting api key
